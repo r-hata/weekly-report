@@ -1,0 +1,25 @@
+{
+  "name": "weekly-report",
+  "version": "1.0.0",
+  "description": "Create weekly report on my working time",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ryosuke Hata <rh.ts124@gmail.com> (https://github.com/r-hata)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r-hata/weekly-report.git"
+  },
+  "bugs": {
+    "url": "https://github.com/r-hata/weekly-report/issues"
+  },
+  "homepage": "https://github.com/r-hata/weekly-report#readme",
+  "devDependencies": {
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}
