@@ -1,7 +1,20 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  div#calendar
-  script(src="/javascripts/calendar.js")
+  div(class='input-group mb-3')
+    div.input-group-prepend
+      span.input-group-text 週報開始日
+    input.form-control#begin_date(type='date')
+  div(class='input-group mb-3')
+    div.input-group-prepend
+      span.input-group-text 週報終了日
+    input.form-control#end_date(type='date')
+  div(class='btn-group mb-3')
+    |
+    button#generate_report(type='button', class='btn btn-primary') 生成
+    button#copy_report(type='button', class='btn btn-default') コピー
+
+  div.output-group#output_report
+    textarea.form-control#weekly_report(rows='12')
+
+  script(src="/javascripts/index.js")
