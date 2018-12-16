@@ -1,51 +1,69 @@
 function execCopy(string) {
-    var temp = document.createElement('div');
+    let temp = document.createElement('div');
 
     temp.appendChild(document.createElement('pre')).textContent = string;
 
-    var style = temp.style;
+    let style = temp.style;
     style.position = 'fixed';
     style.left = '-100%';
 
     document.body.appendChild(temp);
     document.getSelection().selectAllChildren(temp);
 
-    var result = document.execCommand('copy');
+    let result = document.execCommand('copy');
 
     return result;
 }
 
-var generate = document.getElementById('generate_report');
-var copy = document.getElementById('copy_report');
+let generate = document.getElementById('generate_report');
+let copy = document.getElementById('copy_report');
 
 generate.onclick = function generateWeeklyReport() {
-    const weekly_report = document.getElementById('weekly_report');
+    let weekName = [
+        "(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)"
+    ]
+    const weeklyReport = document.getElementById('weekly_report');
 
-    var output = "";
-    var begin_date = document.getElementById('begin_date').value;
-    var begin_num = Number(begin_date.split('-')[2]);
-    var end_date = document.getElementById('end_date').value;
-    var end_num = Number(end_date.split('-')[2]);
-    var period = ""
+    let output = "";
+    const  beginDate = new Date(document.getElementById('begin_date').value);
+    const  beginDay = beginDate.getDate();
+    const  endDate = new Date(document.getElementById('end_date').value);
+    const  endDay = endDate.getDate();
 
     output  = "お疲れ様です。\n";
     output += "\n"
-    output += period + "の勤怠報告です。\n"
-    output += "\n";
+
+    if (isFinite(beginDay) && isFinite(endDay)) {
+        let period = (beginDate.getMonth() + 1) + "/" + beginDay + weekName[beginDate.getDay()] + "～";
+        if (beginDate.getMonth() !== endDate.getMonth()) {
+            period += (endDate.getMonth() + 1) + "/";
+        }
+        period += endDay + weekName[endDate.getDay()];
+
+        output += period + "の勤怠報告です。\n"
+        output += "\n";
+
+        daysNum = Math.ceil((endDate - beginDate) / 86400000); // 86,400,000ms = 1day
+        let writeDate = beginDate;
+        for (let i = 0; i <= daysNum; i++) {
+            output += writeDate.getDate() + "日" + weekName[writeDate.getDay()];
+            output += " 9:00 - 18:00\n"
+
+            writeDate.setDate(writeDate.getDate() + 1)
+        }
+    }
+
     output += "\n";
     output += "以上です。よろしくお願いします。"
 
-    weekly_report.value = output
+    weeklyReport.value = output
 }
 
 copy.onclick = function copyWeeklyReport() {
-    var weekly_report = document.getElementById('weekly_report');
+    let weeklyReport = document.getElementById('weekly_report');
 
-    if(!execCopy(weekly_report.value)) {
+    if(!execCopy(weeklyReport.value)) {
         alert('警告: このブラウザでは対応していません');
-    }
-    else {
-        // Do nothing
     }
 }
 
